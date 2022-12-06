@@ -116,6 +116,7 @@ public class SvcInvoiceImp implements SvcInvoice {
 			double total = unit_price*listproducts.get(i).getQuantity();
 			double taxes = total*.16;
 			double subtotal = total - taxes;
+			int nuevo_stock = (product.getStock() - listproducts.get(i).getQuantity());
 			
 			Item itm = new Item();
 			
@@ -128,7 +129,9 @@ public class SvcInvoiceImp implements SvcInvoice {
 			itm.setStatus(1);
 			
 			listitems.add(itm); 
-			productCl.updateProductStock(listproducts.get(i).getGtin(), product.getStock()-listproducts.get(i).getQuantity());
+			productCl.updateProductStock(listproducts.get(i).getGtin(), nuevo_stock);
 		}
+		
+		return listitems;
 	}
 }
